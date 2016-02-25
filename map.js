@@ -29,7 +29,7 @@ function path2points(path) {
 	var points = [];
 
 	for (var i=0; i < path.context.animatedPathSegList.numberOfItems; i++) {
-		var ele = path.context.animatedPathSegList[i];
+		var ele = path.context.animatedPathSegList.getItem(i);
 		var p = null
 
 		if (i == 0 && ele.pathSegType == 2) { /* M */
@@ -162,7 +162,7 @@ function pathLength(path) {
 	var len = 0;
 
 	for (var i=0; i < path.context.animatedPathSegList.numberOfItems; i++) {
-		var ele = path.context.animatedPathSegList[i];
+		var ele = path.context.animatedPathSegList.getItem(i);
 
 		if (i == 0 && ele.pathSegType == 3) {
 			points.push({x: 0, y: 0})
