@@ -1,3 +1,8 @@
+# JS
+ * Replace getIntersectionList() with code from this git repo:
+   https://github.com/Quazistax/kld-intersections
+
+
 # SVG
  * add missing power lines
  * connect power lines to PDUs
