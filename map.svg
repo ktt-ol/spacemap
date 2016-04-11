@@ -25,13 +25,13 @@
      units="mm"
      inkscape:bbox-paths="true"
      inkscape:snap-bbox="false"
-     inkscape:current-layer="layer7"
+     inkscape:current-layer="layer3"
      inkscape:window-maximized="1"
      inkscape:window-y="0"
      inkscape:window-x="0"
-     inkscape:cy="526.59703"
-     inkscape:cx="1053.9042"
-     inkscape:zoom="2.8284271"
+     inkscape:cy="352.82554"
+     inkscape:cx="1458.4021"
+     inkscape:zoom="4"
      showguides="true"
      showgrid="false"
      id="namedview718"
@@ -1364,7 +1364,7 @@
          d="m 1534.244,484.63645 0,34.39172 35.996,0 c -0.7,-23.76956 -14.799,-32.95423 -35.996,-34.39172 z" />
     </g>
     <g
-       transform="matrix(-0.99998314,0,0,-0.99998591,69585.486,98749.41)"
+       transform="matrix(0.99998314,0,0,0.99998591,-66593.174,-97538.053)"
        id="g4530"
        style="display:inline"
        class="door">
@@ -1381,7 +1381,7 @@
          inkscape:connector-curvature="0" />
     </g>
     <g
-       transform="translate(-66598.224,-97541.071)"
+       transform="translate(-66589.759,-97541.071)"
        id="g4499-3"
        style="display:inline">
       <rect
@@ -1403,7 +1403,7 @@
            id="tspan4506-5">100x280</tspan></text>
     </g>
     <g
-       transform="translate(-66562.816,-97541.071)"
+       transform="translate(-66518.904,-97541.071)"
        id="g4499-3-4"
        style="display:inline">
       <rect
@@ -1429,7 +1429,7 @@
        width="3.5433071"
        height="8.4647989"
        x="603.90784"
-       y="-1535.8251"
+       y="-1429.5116"
        id="rect4811-6-5-6"
        style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.76999996;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.88582683;marker:none;enable-background:accumulate" />
     <g
@@ -1853,11 +1853,6 @@
          y="513.65491"
          x="1688.2069"
          sodipodi:role="line">aufzug</tspan></text>
-    <path
-       d="m 1540.0261,545.2502 0,58.674 -4.201,0 0,-58.674 z"
-       id="path4351-2"
-       style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#803300;fill-opacity:0.39215686;fill-rule:nonzero;stroke:none;stroke-width:1px;marker:none;enable-background:accumulate"
-       inkscape:connector-curvature="0" />
     <path
        d="m 1620.1131,260.72742 0,31.88976 -32.1578,0 c 0.6254,-22.04035 13.2211,-30.55686 32.1578,-31.88976 z"
        id="path4455-4-1-9"
