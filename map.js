@@ -661,6 +661,8 @@ function embedSVG(svgdata) {
 
 	panZoom = svgPanZoom('#mapsvg', {controlIconsEnabled: true, fit: true, center: true, maxZoom: 20, });
 
+	createMQTTLayer();
+
 	handleSVGlayers()
 	handleSVGrooms()
 	handleSVGpowericons()
@@ -686,4 +688,29 @@ function loadSVG() {
 		loadXML.onreadystatechange = handler;
 		loadXML.send();
 	}
+}
+
+function createMQTTLayer() {
+	var svgviewport = $("#viewportdiv > svg > g.svg-pan-zoom_viewport")[0]
+	var group = document.createElementNS('http://www.w3.org/2000/svg', 'g')
+	group.setAttribute("inkscape:groupmode", "layer")
+	group.setAttribute("inkscape:label", "MQTT")
+	group.setAttribute("id", "mqtt-layer")
+	svgviewport.appendChild(group)
+
+	var path = document.createElementNS('http://www.w3.org/2000/svg', 'path')
+	path.setAttribute("d", "m 200,365 v 10 h -15")
+	path.setAttribute("stroke-width", "1")
+	path.setAttribute("stroke", "#000")
+	path.setAttribute("fill", "none")
+	group.appendChild(path)
+
+	var text = document.createElementNS('http://www.w3.org/2000/svg', 'text')
+	text.setAttribute("id", "power-meter-front")
+	text.setAttribute("x", "183")
+	text.setAttribute("y", "376.6")
+	text.setAttribute("style", "font-size: 5px;")
+	text.setAttribute("text-anchor", "end")
+	text.innerHTML = "0.00 kWh"
+	group.appendChild(text)
 }
