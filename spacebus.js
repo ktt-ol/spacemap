@@ -1,4 +1,5 @@
-topic = '/test/stromVorne/cum';		// topic to subscribe to
+power1 = '/test/stromVorne/cum';
+power2 = '/test/stromHinten/cum';
 host = "mainframe.io";
 port = 9001;
 
@@ -33,7 +34,8 @@ function onFail() {
 function onConnect() {
 	console.log('Connected to ' + host + ':' + port);
 
-	mqtt.subscribe(topic, {qos: 0});
+	mqtt.subscribe(power1, {qos: 0});
+	mqtt.subscribe(power2, {qos: 0});
 }
 
 function onConnectionLost(response) {
@@ -47,8 +49,11 @@ function onMessageArrived(message) {
 	var topic = message.destinationName;
 	var payload = message.payloadString;
 
-	if (topic == "/test/stromVorne/cum") {
+	if (topic == power1) {
 		var powermetertext = $("#power-meter-front")[0]
+		powermetertext.innerHTML = payload + " kWh"
+	} else if (topic == power2) {
+		var powermetertext = $("#power-meter-back")[0]
 		powermetertext.innerHTML = payload + " kWh"
 	} else {
 		console.log(topic + " = " + payload);

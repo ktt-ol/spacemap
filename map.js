@@ -698,19 +698,36 @@ function createMQTTLayer() {
 	group.setAttribute("id", "mqtt-layer")
 	svgviewport.appendChild(group)
 
-	var path = document.createElementNS('http://www.w3.org/2000/svg', 'path')
-	path.setAttribute("d", "m 200,365 v 10 h -15")
-	path.setAttribute("stroke-width", "1")
-	path.setAttribute("stroke", "#000")
-	path.setAttribute("fill", "none")
-	group.appendChild(path)
+	var path1 = document.createElementNS('http://www.w3.org/2000/svg', 'path')
+	path1.setAttribute("d", "m 200,365 v 10 h -15")
+	path1.setAttribute("stroke-width", "1")
+	path1.setAttribute("stroke", "#000")
+	path1.setAttribute("fill", "none")
+	group.appendChild(path1)
 
-	var text = document.createElementNS('http://www.w3.org/2000/svg', 'text')
-	text.setAttribute("id", "power-meter-front")
-	text.setAttribute("x", "183")
-	text.setAttribute("y", "376.6")
-	text.setAttribute("style", "font-size: 5px;")
-	text.setAttribute("text-anchor", "end")
-	text.innerHTML = "0.00 kWh"
-	group.appendChild(text)
+	var text1 = document.createElementNS('http://www.w3.org/2000/svg', 'text')
+	text1.setAttribute("id", "power-meter-front")
+	text1.setAttribute("x", "183")
+	text1.setAttribute("y", "376.6")
+	text1.setAttribute("style", "font-size: 5px;")
+	text1.setAttribute("text-anchor", "end")
+	text1.innerHTML = "0.00 kWh"
+	group.appendChild(text1)
+
+	var path2 = document.createElementNS('http://www.w3.org/2000/svg', 'path')
+	path2.setAttribute("d", "m 1665,360 v 10 h 15")
+	path2.setAttribute("stroke-width", "1")
+	path2.setAttribute("stroke", "#000")
+	path2.setAttribute("fill", "none")
+	group.appendChild(path2)
+
+	var text2 = document.createElementNS('http://www.w3.org/2000/svg', 'text')
+	text2.setAttribute("id", "power-meter-back")
+	text2.setAttribute("x", "1682")
+	text2.setAttribute("y", "371.6")
+	text2.setAttribute("style", "font-size: 5px;")
+	text2.setAttribute("text-anchor", "start")
+	text2.innerHTML = "0.00 kWh"
+	group.appendChild(text2)
+
 }
