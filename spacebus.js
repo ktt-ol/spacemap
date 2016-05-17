@@ -1,5 +1,8 @@
-power1 = '/test/stromVorne/cum';
-power2 = '/test/stromHinten/cum';
+space_status = '/access-control-system/space-state';
+power_front_cum = '/test/stromVorne/cum';
+power_front_pwr = '/test/stromVorne/power';
+power_back_cum = '/test/stromHinten/cum';
+power_back_pwr = '/test/stromHinten/power';
 host = "mainframe.io";
 port = 9001;
 
@@ -34,8 +37,11 @@ function onFail() {
 function onConnect() {
 	console.log('Connected to ' + host + ':' + port);
 
-	mqtt.subscribe(power1, {qos: 0});
-	mqtt.subscribe(power2, {qos: 0});
+	mqtt.subscribe(space_status, {qos: 0});
+	mqtt.subscribe(power_front_cum, {qos: 0});
+	mqtt.subscribe(power_front_pwr, {qos: 0});
+	mqtt.subscribe(power_back_cum, {qos: 0});
+	mqtt.subscribe(power_back_pwr, {qos: 0});
 }
 
 function onConnectionLost(response) {
@@ -49,12 +55,21 @@ function onMessageArrived(message) {
 	var topic = message.destinationName;
 	var payload = message.payloadString;
 
-	if (topic == power1) {
+	if (topic == space_status) {
+		var spacestatus = $("#mqtt-space-status")[0]
+		if (spacestatus) spacestatus.innerHTML = payload
+	} else if (topic == power_front_cum) {
 		var powermetertext = $("#power-meter-front")[0]
 		powermetertext.innerHTML = payload + " kWh"
-	} else if (topic == power2) {
+	} else if (topic == power_back_cum) {
 		var powermetertext = $("#power-meter-back")[0]
 		powermetertext.innerHTML = payload + " kWh"
+	} else if (topic == power_front_pwr) {
+		var frontpwr = $("#power-front-pwr")[0]
+		if (frontpwr) frontpwr.innerHTML = payload + " kW"
+	} else if (topic == power_back_pwr) {
+		var backpwr = $("#power-back-pwr")[0]
+		if (backpwr) backpwr.innerHTML = payload + " kW"
 	} else {
 		console.log(topic + " = " + payload);
 	}
