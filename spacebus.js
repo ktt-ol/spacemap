@@ -3,6 +3,7 @@ power_front_cum = '/test/stromVorne/cum';
 power_front_pwr = '/test/stromVorne/power';
 power_back_cum = '/test/stromHinten/cum';
 power_back_pwr = '/test/stromHinten/power';
+temp_lasercutter = '/test/laserroom/laser/temperature';
 host = "mainframe.io";
 port = 9001;
 
@@ -42,6 +43,7 @@ function onConnect() {
 	mqtt.subscribe(power_front_pwr, {qos: 0});
 	mqtt.subscribe(power_back_cum, {qos: 0});
 	mqtt.subscribe(power_back_pwr, {qos: 0});
+	mqtt.subscribe(temp_lasercutter, {qos: 0});
 }
 
 function onConnectionLost(response) {
@@ -70,6 +72,9 @@ function onMessageArrived(message) {
 	} else if (topic == power_back_pwr) {
 		var backpwr = $("#power-back-pwr")[0]
 		if (backpwr) backpwr.innerHTML = payload + " kW"
+	} else if (topic == temp_lasercutter) {
+		var templaser = $("#temp-lasercutter")[0]
+		if (templaser) templaser.innerHTML = (parseInt(payload)-273200)/1000.0 + " °C"
 	} else {
 		console.log(topic + " = " + payload);
 	}

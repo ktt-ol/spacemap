@@ -730,4 +730,13 @@ function createMQTTLayer() {
 	text2.innerHTML = "0.00 kWh"
 	group.appendChild(text2)
 
+	var text3 = document.createElementNS('http://www.w3.org/2000/svg', 'text')
+	text3.setAttribute("id", "temp-lasercutter")
+	text3.setAttribute("x", "365")
+	text3.setAttribute("y", "800")
+	text3.setAttribute("style", "font-size: 10px;")
+	text3.setAttribute("text-anchor", "middle")
+	text3.innerHTML = "--- °C"
+	group.appendChild(text3)
+
 }
