@@ -25,13 +25,13 @@
      units="mm"
      inkscape:bbox-paths="true"
      inkscape:snap-bbox="false"
-     inkscape:current-layer="layer3"
+     inkscape:current-layer="layer11"
      inkscape:window-maximized="1"
      inkscape:window-y="0"
      inkscape:window-x="0"
-     inkscape:cy="352.82554"
-     inkscape:cx="1458.4021"
-     inkscape:zoom="4"
+     inkscape:cy="797.61881"
+     inkscape:cx="1591.474"
+     inkscape:zoom="2.8284271"
      showguides="true"
      showgrid="false"
      id="namedview718"
@@ -268,7 +268,7 @@
        d="m 1696.3918,167.77537 -0.6119,-84.270338 -72.2863,-0.50321 -1.0235,84.610738 z"
        class="room">
       <title
-         id="title7848-6">Installationsschacht hinten</title>
+         id="title7848-6">Serverraum</title>
     </path>
     <path
        sodipodi:nodetypes="ccccc"
@@ -6227,6 +6227,26 @@
          id="text7759"
          y="687.92438"
          x="470.91144">E-Werkstatt</text>
+    </g>
+    <g
+       id="g7994"
+       transform="translate(-226.98128,-140.3607)">
+      <rect
+         width="70.83152"
+         height="44.267025"
+         x="-301.3027"
+         y="1876.9053"
+         transform="matrix(0,-1,1,0,0,0)"
+         id="rect4306-0-9-8-7"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.5;fill:#00ff00;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.01249999;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;marker:none;enable-background:accumulate" />
+      <text
+         x="-263.18198"
+         y="1904.8647"
+         id="text4308-1-1-7-5"
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15.62756062px;line-height:125%;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none"
+         sodipodi:linespacing="125%"
+         transform="matrix(0,-1,1,0,0,0)">Server</text>
     </g>
   </g>
   <g
