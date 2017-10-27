@@ -68,10 +68,10 @@ function onMessageArrived(message) {
 		powermetertext.innerHTML = payload + " kWh"
 	} else if (topic == power_front_pwr) {
 		var frontpwr = $("#power-front-pwr")[0]
-		if (frontpwr) frontpwr.innerHTML = payload + " kW"
+		if (frontpwr) frontpwr.innerHTML = payload + " W"
 	} else if (topic == power_back_pwr) {
 		var backpwr = $("#power-back-pwr")[0]
-		if (backpwr) backpwr.innerHTML = payload + " kW"
+		if (backpwr) backpwr.innerHTML = payload + " W"
 	} else if (topic == temp_lasercutter) {
 		var templaser = $("#temp-lasercutter")[0]
 		if (templaser) templaser.innerHTML = (parseInt(payload)-273200)/1000.0 + " °C"
