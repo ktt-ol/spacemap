@@ -467,6 +467,23 @@ function getPowerType(power) {
 }
 
 /**
+ * Get PDU port
+ *
+ * @param cable DOM element for the power object
+ * @return {string} power object type
+ */
+function getPDUport(icon) {
+	var result = {"pdu": 0, "branch": 0, "receptacle": 0}
+
+	elements = icon.id.split("_")
+	result["pdu"] = parseInt(elements[0].replace("pdu-", ""))
+	result["branch"] = parseInt(elements[1].replace("branch-", ""))
+	result["receptacle"] = parseInt(elements[2].replace("receptacle-", ""))
+
+	return result
+}
+
+/**
  * handle layer information
  */
 function handleSVGlayers() {
@@ -474,7 +491,7 @@ function handleSVGlayers() {
 		/* Layer group should catch events for drag'n'drop support */
 		$(this).css("pointer-events", "all");
 
-		var defaultlayers = [ "Raummarkierungen", "Base", "Wegmarkierungen", "Regal & Spinde", "Furniture", "Küche", "Raumbeschriftung" ];
+		var defaultlayers = [ "Raummarkierungen", "Base", "Wegmarkierungen", "Regal & Spinde", "Furniture", "Küche", "Raumbeschriftung", "PDU" ];
 
 		/* Extract Layers for Navigation */
 		if ( defaultlayers.indexOf($( this ).attr("inkscape:label")) >= 0 ) {
@@ -648,6 +665,58 @@ function handleSVGpowerlines() {
 }
 
 /**
+ * handle power icon information
+ */
+function handleSVGpdu() {
+	$( ".pdu-room-lighting" ).each(function( index ) {
+		$(this).mousedown(function(evt) {
+			mousedownevt = evt;
+		});
+
+		$(this).hover(
+			function() { highlightPowerIcon($(this), true) },
+			function() { highlightPowerIcon($(this), false) }
+		);
+
+		$(this).mouseup(function(evt) {
+			/* make sure, we receive only one click event */
+			if (typeof lastclick !== 'undefined' && evt.timeStamp === lastclick.timeStamp && evt.offsetX === lastclick.offsetX && evt.offsetY === lastclick.offsetY)
+				return;
+			lastclick = evt;
+
+			if (mousedownevt.screenX < evt.screenX-5 || mousedownevt.screenX > evt.screenX+5)
+				return;
+			if (mousedownevt.screenY < evt.screenY-5 || mousedownevt.screenY > evt.screenY+5)
+				return;
+
+			var roomname = "unknown"
+			try {
+				var room = getSingleRoomForObject($(this)[0])
+				roomname = $(room).find("title").text()
+			} catch(err) {
+				console.log("Could not get Room:", err)
+			}
+
+			var portinfo = getPDUport($(this)[0])
+
+			color = $("#pdu-"+portinfo["pdu"]+"_branch-"+portinfo["branch"]+"_receptacle-"+portinfo["receptacle"]+" .pdu-port-status").css("fill")
+			if (color == "rgb(114, 159, 207)") {
+				/* handle click event */
+				$("#InfoTitle").text("Informationen über PDU Port")
+				$("#InfoBody").html("<b>Raum:</b>" + roomname + "<br/><b>PDU: </b>" + portinfo["pdu"] + ", <b>Branch: </b>" + portinfo["branch"] + ", <b>Receptacle: </b>" + portinfo["receptacle"] + "<br/><br/>Unknown Port Status")
+				$("#Info").modal()
+			} else if(color == "rgb(255, 0, 0)") {
+				/* handle click event */
+				control_pdu_receptacle(portinfo["pdu"], portinfo["branch"], portinfo["receptacle"], 1)
+			} else if(color == "rgb(0, 255, 0)") {
+				/* handle click event */
+				control_pdu_receptacle(portinfo["pdu"], portinfo["branch"], portinfo["receptacle"], 0)
+			}
+		});
+	});
+}
+
+/**
  * embed map SVG object
  *
  * @param svgdata SVG information (e.g. loaded via XMLHttpRequest)
@@ -667,6 +736,7 @@ function embedSVG(svgdata) {
 	handleSVGrooms()
 	handleSVGpowericons()
 	handleSVGpowerlines()
+	handleSVGpdu()
 }
 
 /**
@@ -738,5 +808,4 @@ function createMQTTLayer() {
 	text3.setAttribute("text-anchor", "middle")
 	text3.innerHTML = "--- °C"
 	group.appendChild(text3)
-
 }

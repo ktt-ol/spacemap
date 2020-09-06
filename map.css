@@ -29,6 +29,10 @@ path, g, rect, text {
 	pointer-events: auto;
 }
 
+.pdu-room-lighting * {
+	pointer-events: auto;
+}
+
 .receptacle * {
 	pointer-events: auto;
 }
