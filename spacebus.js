@@ -1,8 +1,8 @@
 space_status = '/access-control-system/space-state';
-power_front_cum = '/test/stromVorne/cum';
-power_front_pwr = '/test/stromVorne/power';
-power_back_cum = '/test/stromHinten/cum';
-power_back_pwr = '/test/stromHinten/power';
+power_front_cum = '/sensor/energy/easymeter/front/energy';
+power_front_pwr = '/sensor/energy/easymeter/front/power';
+power_back_cum = '/sensor/energy/easymeter/back/energy';
+power_back_pwr = '/sensor/energy/easymeter/back/power';
 temp_lasercutter = '/test/laserroom/laser/temperature';
 host = "mainframe.io";
 port = 9001;
@@ -62,16 +62,16 @@ function onMessageArrived(message) {
 		if (spacestatus) spacestatus.innerHTML = payload
 	} else if (topic == power_front_cum) {
 		var powermetertext = $("#power-meter-front")[0]
-		powermetertext.innerHTML = payload + " kWh"
+		powermetertext.innerHTML = payload / 1000 + " kWh"
 	} else if (topic == power_back_cum) {
 		var powermetertext = $("#power-meter-back")[0]
-		powermetertext.innerHTML = payload + " kWh"
+		powermetertext.innerHTML = payload / 1000 + " kWh"
 	} else if (topic == power_front_pwr) {
 		var frontpwr = $("#power-front-pwr")[0]
-		if (frontpwr) frontpwr.innerHTML = payload + " W"
+		if (frontpwr) frontpwr.innerHTML = payload/1000 + " W"
 	} else if (topic == power_back_pwr) {
 		var backpwr = $("#power-back-pwr")[0]
-		if (backpwr) backpwr.innerHTML = payload + " W"
+		if (backpwr) backpwr.innerHTML = payload/1000 + " W"
 	} else if (topic == temp_lasercutter) {
 		var templaser = $("#temp-lasercutter")[0]
 		if (templaser) templaser.innerHTML = (parseInt(payload)-273200)/1000.0 + " °C"
