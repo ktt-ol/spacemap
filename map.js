@@ -673,6 +673,10 @@ function handleSVGpdu() {
 			mousedownevt = evt;
 		});
 
+		$(this).on("touchstart", function(evt) {
+			touchstartevt = evt;
+		});
+
 		$(this).hover(
 			function() { highlightPowerIcon($(this), true) },
 			function() { highlightPowerIcon($(this), false) }
@@ -713,6 +717,42 @@ function handleSVGpdu() {
 				control_pdu_receptacle(portinfo["pdu"], portinfo["branch"], portinfo["receptacle"], 0)
 			}
 		});
+
+		$(this).on("touchend", function(evt) {
+			/* make sure, we receive only one click event */
+			if (typeof lasttouch !== 'undefined' && evt.timeStamp === lasttouch.timeStamp && evt.offsetX === lasttouch.offsetX && evt.offsetY === lasttouch.offsetY)
+				return;
+			lasttouch = evt;
+
+			if (touchstartevt.screenX < evt.screenX-5 || touchstartevt.screenX > evt.screenX+5)
+				return;
+			if (touchstartevt.screenY < evt.screenY-5 || touchstartevt.screenY > evt.screenY+5)
+				return;
+
+			var roomname = "unknown"
+			try {
+				var room = getSingleRoomForObject($(this)[0])
+				roomname = $(room).find("title").text()
+			} catch(err) {
+				console.log("Could not get Room:", err)
+			}
+
+			var portinfo = getPDUport($(this)[0])
+
+			color = $("#pdu-"+portinfo["pdu"]+"_branch-"+portinfo["branch"]+"_receptacle-"+portinfo["receptacle"]+" .pdu-port-status").css("fill")
+			if (color == "rgb(114, 159, 207)") {
+				/* handle click event */
+				$("#InfoTitle").text("Informationen über PDU Port")
+				$("#InfoBody").html("<b>Raum:</b>" + roomname + "<br/><b>PDU: </b>" + portinfo["pdu"] + ", <b>Branch: </b>" + portinfo["branch"] + ", <b>Receptacle: </b>" + portinfo["receptacle"] + "<br/><br/>Unknown Port Status")
+				$("#Info").modal()
+			} else if(color == "rgb(255, 0, 0)") {
+				/* handle click event */
+				control_pdu_receptacle(portinfo["pdu"], portinfo["branch"], portinfo["receptacle"], 1)
+			} else if(color == "rgb(0, 255, 0)") {
+				/* handle click event */
+				control_pdu_receptacle(portinfo["pdu"], portinfo["branch"], portinfo["receptacle"], 0)
+			}
+		});
 	});
 }
 
@@ -727,8 +767,61 @@ function embedSVG(svgdata) {
 
 	var svgelement = $("#viewportdiv > svg")
 	svgelement.attr("id", "mapsvg")
+	var eventsHandler;
 
-	panZoom = svgPanZoom('#mapsvg', {controlIconsEnabled: true, fit: true, center: true, maxZoom: 20, });
+	eventsHandler = {
+		haltEventListeners: ['touchstart', 'touchend', 'touchmove', 'touchleave', 'touchcancel'],
+		init: function(options) {
+			var instance = options.instance , initialScale = 1 , pannedX = 0 , pannedY = 0
+
+			// Init Hammer
+			// Listen only for pointer and touch events
+			this.hammer = Hammer(options.svgElement, {
+				inputClass: Hammer.SUPPORT_POINTER_EVENTS ? Hammer.PointerEventInput : Hammer.TouchInput
+			})
+
+			// Enable pinch
+			this.hammer.get('pinch').set({enable: true})
+
+			// Handle double tap
+			this.hammer.on('doubletap', function(ev){
+				instance.zoomIn()
+			})
+
+			// Handle pan
+			this.hammer.on('panstart panmove', function(ev){
+				// On pan start reset panned variables
+				if (ev.type === 'panstart') {
+					pannedX = 0
+					pannedY = 0
+				}
+
+				// Pan only the difference
+				instance.panBy({x: ev.deltaX - pannedX, y: ev.deltaY - pannedY})
+				pannedX = ev.deltaX
+				pannedY = ev.deltaY
+			})
+
+			// Handle pinch
+			this.hammer.on('pinchstart pinchmove', function(ev){
+				// On pinch start remember initial zoom
+				if (ev.type === 'pinchstart') {
+					initialScale = instance.getZoom()
+					instance.zoomAtPoint(initialScale * ev.scale, {x: ev.center.x, y: ev.center.y})
+				}
+
+				instance.zoomAtPoint(initialScale * ev.scale, {x: ev.center.x, y: ev.center.y})
+			})
+
+			// Prevent moving the page on some devices when panning over SVG
+			options.svgElement.addEventListener('touchmove', function(e){ e.preventDefault(); });
+		},
+		destroy: function(){
+			this.hammer.destroy()
+		}
+	}
+
+	panZoom = svgPanZoom('#mapsvg', {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true, maxZoom: 20, customEventsHandler: eventsHandler, });
 
 	createMQTTLayer();
 
